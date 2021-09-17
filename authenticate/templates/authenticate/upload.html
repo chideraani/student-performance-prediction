@@ -1,0 +1,123 @@
+
+{% extends 'authenticate/base.html'%}
+{% load static%}
+
+{% block content%}
+
+<script>
+    const support = document.getElementsByClassName ("support") 
+    const confidence = document.getElementsByClassName ("confidence") 
+        const selectors = [ 
+            [".support", support],
+            [".confidence", confidence], 
+        ] 
+
+
+    function myFunction() {
+        let x = document.getElementById("support").value;
+        let y = document.getElementById("confidence").value;
+        let text;
+        if (isNaN(x) || isNaN(y)) {
+            text = "Supports and Confidence must be decimal!";
+        } else {
+            text = "";
+        }
+        document.getElementById("demo").innerHTML = text;
+        }
+
+    document.addEventListener ("change", event => {
+
+        const matches = str => event.target.matches (str)
+        const find = selectors.find (s => {
+            const [tag, element] = s 
+            return matches (tag)
+        })
+
+        if (find === undefined) {
+            
+        } else {
+            const [tag, element] = find
+            
+            myFunction()
+
+            const validList = selectors.map (s => {
+                const [tag, element] = s 
+                return !isNaN(element.value)
+            })
+                const allValid = forall (validList)
+                updateButton (allValid)
+            }
+    })
+
+</script>
+
+<form method="POST" enctype="multipart/form-data" action='associateCourse' onsubmit="return myFunction()">
+    <h1 class="form-header">View Relationships</h1>
+     <!-- Button trigger modal -->
+     <button style="color: rgb(2, 117, 216);  font-weight:bold; text-align:center" type="button" class="btn btn-link mb-3" data-toggle="modal" data-target="#tempDownload">CLICK HERE TO VIEW FILE UPLOAD REQUIREMENTS </button> <br>
+
+     <!-- Modal -->
+     <div class="modal fade" id="tempDownload" tabindex="-1" role="dialog" aria-labelledby="tempDownloadTitle" aria-hidden="true">
+     <div class="modal-dialog modal-dialog-centered" role='document'>
+     <div class="modal-content">
+     <div class="modal-header">
+     <h5 class="modal-title" id="exampleModalLongTitle">Rules for File Upload</h5>
+     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+     </button>
+     </div>
+     <div class="modal-body">
+     <ul>
+         <li>Re-upload the file as a csv file</li>
+         <li>Column names should be the course code</li>
+         <li>Fill in each row in this format 'coursecode_grade' e.g <br> 'CSC111_A'</li>
+     </ul>
+     </div>
+     <div class="modal-footer">
+     <a href="{% static 'association_sample.csv '%}" class="btn btn-primary">Download Sample</a>
+     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+ 
+     </div>
+     </div>
+     </div>
+     </div>
+    {% csrf_token %}
+    <input class='upload-box mt-4' type="file" name="document" required='required'>
+    <br><br>
+   
+    <div class="container" style="color: firebrick; margin-top: -20px">
+        <p id="demo"></p>
+    </div>
+
+
+    <div class="col-md-4 col-sm-4">
+        <label for="support">Support:</label>
+    </div> 
+    <input required='required' id='support' name="support" type="text" placeholder="Support" class="form-control upload-text support"><br><br>
+
+    <div class="col-md-4 col-sm-4">
+        <label for="confidence">Confidence:</label>
+    </div> 
+    <input required='required'id='confidence' name="confidence" type="text" placeholder="Confidence" class="form-control upload-text confidence"><br><br>
+
+    <input class= 'btn1 mb-3' type="submit" value="Submit"><br>
+
+    {%if file %}
+    <a class="mr-5" style="font-weight: bold; color:rgb(2, 117, 216);" href="{{ file.userupload.url }}" download>Click here to download results</a><br>
+    {% endif %}
+    {% block messages %}
+    {%if messages %}
+    <div class="container" style="color: firebrick; margin-top: -20px">
+        {% for message in messages %}
+            {{message}}
+        {% endfor %}
+    </div>
+    {% endif %}
+    {%endblock%}
+</form>
+
+<!-- Rules are : <br> {{ rule }} <br><br> -->
+  
+
+
+{%endblock%}

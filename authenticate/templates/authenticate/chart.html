@@ -1,0 +1,153 @@
+{%extends 'authenticate/base.html'%}
+{%load static%}
+
+{%block content%}
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <form method="POST" enctype="multipart/form-data" action='chart'>
+        <!-- Button trigger modal -->
+        <section id='rules'>
+        <button  style="color: rgb(2, 117, 216); font-weight:bold; text-align:center;" type="button" class="btn btn-link mb-3" data-toggle="modal" data-target="#tempDownload">CLICK HERE TO VIEW FILE UPLOAD REQUIREMENTS </button> <br> 
+
+        <!-- Modal -->
+        <div class="modal fade" id="tempDownload" tabindex="-1" role="dialog" aria-labelledby="tempDownloadTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role='document'>
+        <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Rules for File Upload</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+        <ul>
+            <li>Re-upload the file as a csv file</li>
+            <li>Edit the 'COURSE_SCORES' column and make a column for each course</li>
+            <li>Rename each course column to be the course code <br> e.g 'CSC 111'</li>
+            <li>Fill in students' score in each course code column.</li>
+        </ul>
+        </div>
+        <div class="modal-footer">
+        <a href="{% static 'chart_template.xlsx '%}" type="button" class="btn btn-primary">Download Template</a>
+        <button id='btn' type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    
+        </div>
+        </div>
+        </div>
+        </div>
+        </section>
+        {% csrf_token %}
+        <section id='forms' style="display: none;">
+        <input type="file" name="vizfile" required='required' class='mt-4 mb-3 upload-box'> <br>
+        <input type="submit" class = 'btn1' value="Upload">
+    </section>
+    </form>
+    <br><br>
+
+    {% block messages %}
+    {%if messages %}
+    <div class="container" style="color: firebrick; margin-top: -20px">
+        {% for message in messages %}
+            {{message}}
+        {% endfor %}
+    </div>
+    {% endif %}
+    {%endblock%}
+
+    <!-- Content Row -->
+    <div class="row">
+        <div class="col-xl-6 col-lg-6">
+            <!-- Bar Chart 1-->
+            <div class="card shadow mb-3">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary text-center">Average Performance by Gender</h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-bar">
+                        <canvas id="myBarChart"></canvas>
+                    </div>
+                    
+                
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Doughnut chart -->
+        <div class="col-xl-6 col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary text-center">Class Distribution of Students</h6>
+                </div>
+                
+                <div class="card-body">
+                    <div class="chart-bar">
+                        <canvas id="myPieChart"></canvas>
+                    </div>
+                    
+                
+                </div>
+               
+            </div>
+        </div>
+    </div>
+
+    <!-- Content Row -->
+    <div class="row">
+        <div class="col-xl-6 col-lg-6">
+            <!-- Bar Chart 1-->
+            <div class="card shadow mb-3">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary text-center">Performance Distribution by Gender</h6>
+                </div>
+                <div class="card-body">
+                    <div id="myBoxPlot" class="chart-bar" style="width: 100%;">
+                        <!-- <div id="myBoxPlot" style="padding: 0%; padding-bottom:0%"></div> -->
+                    </div>
+                    
+                
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Doughnut chart -->
+        <div class="col-xl-6 col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary text-center">Average CGPA Change by Class</h6>
+                </div>
+                
+                <div class="card-body">
+                    <div class="chart-bar">
+                        <canvas id="myBarChart2"></canvas>
+                    </div>
+                
+                </div>
+               
+            </div>
+        </div>
+    </div>
+    
+<!-- bar chart 1 -->
+<input type="hidden" id='male' value="{{ Gender_GPA.male }}">
+<input type="hidden" id='female' value="{{ Gender_GPA.female }}">
+
+<!-- dougnut chart -->
+<input type="hidden" id='class1' value="{{ Class_Bar.class1 }}">
+<input type="hidden" id='class2' value="{{ Class_Bar.class2 }}">
+<input type="hidden" id='class3' value="{{ Class_Bar.class3 }}">
+<input type="hidden" id='class4' value="{{ Class_Bar.class4 }}">
+
+<!-- boxplot 1 -->
+<input type="hidden" id='cgpa_male' value="{{ Box_Gender.cgpa_male }}">
+<input type="hidden" id='cgpa_female' value="{{ Box_Gender.cgpa_female }}">
+
+<!-- bar chart 2 -->
+<input type="hidden" id='cl1' value="{{ CGPA_Change.cl1 }}">
+<input type="hidden" id='cl2' value="{{ CGPA_Change.cl2 }}">
+<input type="hidden" id='cl3' value="{{ CGPA_Change.cl3 }}">
+<input type="hidden" id='cl4' value="{{ CGPA_Change.cl4 }}">
+</div>
+{%endblock%}

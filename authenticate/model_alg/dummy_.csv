@@ -1,0 +1,6 @@
+﻿S/N,CNature_Math,CNature_Theory,CNature_Abs,CNature_Prog,CNature_Prac,CStructure_Hard,CStructure_Mod,CStructure_Easy,CBroadness_Ext,CBroadness_Mod,CBroadness_Short,CPerformance_Poor,CPerformance_Fair,CPerformance_Good,StuCapacity_Low,StuCapacity_Avg,StuCapacity_High
+1,0,0,0,1,0,0,0,1,0,0,1,0,0,1,0,0,1
+2,0,0,0,1,0,0,0,1,0,0,1,0,1,0,0,0,1
+3,0,0,0,1,0,0,0,1,0,1,0,0,1,0,0,0,1
+4,0,0,1,0,0,0,1,0,0,0,1,0,0,1,0,0,1
+5,0,1,0,0,0,0,1,0,0,0,1,0,0,1,0,0,1
