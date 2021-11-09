@@ -157,25 +157,7 @@ STATICFILES_DIRS = [
 #     'dash_render',
 #     'dpd_components',
 #     'dpd_static_support'
-# ]
-# # Staticfiles finders for locating dash app assets and related files (Dash static files)
-# STATICFILES_FINDERS = [
-#     'django.contrib.staticfiles.finders.FileSystemFinder',
-#     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#     'django_plotly_dash.finders.DashAssetFinder',
-#     'django_plotly_dash.finders.DashComponentFinder',
-#     'django_plotly_dash.finders.DashAppDirectoryFinder',
-# ]
 
-# # Channels config, to use channel layers
-# CHANNEL_LAYERS = {
-#     'default': {
-#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
-#         'CONFIG': {
-#             'hosts': [('127.0.0.1', 6379),],
-#         },
-#     },
-# }
 
 
 STATICFILES_LOCATION = 'static'
@@ -190,38 +172,3 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
-
-
-
-# # Default primary key field type
-# # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
-
-# DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-# # CRISPY_TEMPLATE_PACK = 'bootstrap4'
-# # ASGI_APPLICATION = 'authenticate.routing.application'
-# # CHANNEL_LAYERS = {
-# #     'default':{
-# #         'BACKEND': 'channels_redis.core.RedisChannelLayer',
-# #         'CONFIG':{
-# #             'hosts': [('127.0.0.1',6379),],
-# #         }
-# #     }
-# # }
-
-# # STATICFILES_FINDERS = [
-# #     'django.contrib.staticfiles.finders.FileSystemFinder',
-# #     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-# #     'django_plotly_dash.finders.DashAssetFinder',
-# #     'django_plotly_dash.finders.DashComponentFinder'
-# # ]
-
-# # PLOTLY_COMPONENTS = [
-# #     'dash_core_components',
-# #     'dash_html_components',
-# #     'dash_render',
-
-# #     'dpd_components'
-# ]
-
