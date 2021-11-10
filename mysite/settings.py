@@ -27,9 +27,7 @@ SECRET_KEY = 'django-insecure-#9m8i73j1%#0gx%-kp7e0u9c%zo0&wyer8bfzq4n)u@o(&t7jo
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['https://student-pattern-prediction-app.herokuapp.com',
-'localhost',
-'127.0.0.1']
+ALLOWED_HOSTS = ['https://student-pattern-prediction-app.herokuapp.com','localhost','127.0.0.1']
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
