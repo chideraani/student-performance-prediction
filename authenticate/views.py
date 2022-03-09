@@ -174,7 +174,7 @@ def checkCourse(request):
                     answer = 'No rules exist for this association!'
                 else:
                     for row in res:
-                        answer = ('{} and {} are likely to occur with a support of {}% and confideence of {}%'.format(row[0],row[1], (row[2]*100),(row[3]*100)))
+                        answer = ('{} and {} are likely to occur with a support of {}% and confidence of {}%'.format(row[0],row[1], (row[2]*100),(row[3]*100)))
 
                 return answer
             answer = ans(result)
@@ -291,7 +291,6 @@ def chart(request):
 @login_required(login_url='login')   
 def cpredictCourse(request):
     name = {}
-    print('hellp')
     if request.method == 'POST':
         uploaded_file = request.FILES['cpredictdocs']
         fs = FileSystemStorage()
@@ -304,12 +303,10 @@ def cpredictCourse(request):
 @login_required(login_url='login')
 def cpredict(request):
     
-    print('hello')
     result_perf = joblib.load('./authenticate/model_alg/model3.sav')
     temp = {}
     fileModel2 = 0
     if request.method == 'POST':
-        print('hello')
         uploaded_file = request.FILES['cpredictdocs']
         if uploaded_file.name.endswith('.csv'):
             temp['support'] = request.POST.get('supports')
