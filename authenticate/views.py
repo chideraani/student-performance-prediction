@@ -1,4 +1,3 @@
-from django.http import response
 import pandas as pd
 import joblib
 import json
@@ -11,7 +10,6 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.core.files.storage import FileSystemStorage
 from .forms import CreateUserForm
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -26,10 +24,8 @@ def register(request):
 				form.save()
 				user = form.cleaned_data.get('username')
 				messages.success(request, 'Account was created for ' + user)
-
 				return redirect('login')
 			
-
 		context = {'form':form}
 		return render(request, 'authenticate/register.html', context)
 
@@ -40,7 +36,6 @@ def loginPage(request):
 		if request.method == 'POST':
 			username = request.POST.get('username')
 			password =request.POST.get('password')
-
 			user = authenticate(request, username=username, password=password)
 
 			if user is not None:
@@ -174,11 +169,10 @@ def checkCourse(request):
                     answer = 'No rules exist for this association!'
                 else:
                     for row in res:
-                        answer = ('{} and {} are likely to occur with a support of {}% and confidence of {}%'.format(row[0],row[1], (row[2]*100),(row[3]*100)))
+                        answer = ('{} and {} are likely to occur with a support of {}% and confideence of {}%'.format(row[0],row[1], (row[2]*100),(row[3]*100)))
 
                 return answer
             answer = ans(result)
-            # print(answer)
             predict = True
         else:
             messages.warning(request, 'File was not uploaded. Please use csv file extension!')
@@ -197,23 +191,19 @@ def chart(request):
         uploaded_file = request.FILES['vizfile']
         if uploaded_file.name.endswith('.csv'):
             df = pd.read_csv( uploaded_file)
-        # df = pd.DataFrame(data=data, index=None)
 
             df['PRE_CGPA'] = df['PRE WTS'] / df['PRE UNIT']
             df['CGPA_CHANGE'] = (df['CGPA'] - df['PRE_CGPA']) * 100
             df['CHANGE'] = df['CGPA_CHANGE'].apply(lambda x: 'increase' if x > 0 else 'decrease')
             cols = df.iloc[:,6:18]
-            print(len(df))
             # bar 1
             totalMale =0
             totalFemale = 0 
             male =0 
             female =0
             
-            for i in range(0,len(df)) :
-                
+            for i in range(0,len(df)) :                
                 if not str(df.iloc[i]['GPA']) == 'nan':
-                    print(str(df.iloc[i]['GPA']))
                     if  df.iloc[i]['GENDER'] == 'M':
                         totalMale = float(df.iloc[i]['GPA']) + totalMale   
                         male = 1 + male
@@ -230,8 +220,6 @@ def chart(request):
             rslt_df2 = df[df['GENDER'] == 'F']
             cgpa_female = rslt_df2['GPA'].tolist()
 
-            
-            print(cgpa_male[1])
             Box_Gender = {'cgpa_male': cgpa_male, 'cgpa_female':cgpa_female}
 
             # doughnut chart 
@@ -266,7 +254,6 @@ def chart(request):
             for i in range(0,len(df)) :
                 
                 if not str(df.iloc[i]['CGPA_CHANGE']) == 'nan':
-                    # print(str(df.iloc[i]['GPA']))
                     if  df.iloc[i]['CLASS'] == '1st':
                         totalcl1 = float(df.iloc[i]['CGPA_CHANGE']) + totalcl1   
                         cl1 = 1 + cl1
@@ -279,7 +266,6 @@ def chart(request):
                     elif  df.iloc[i]['CLASS']=='3rd':
                         totalcl4 = float(df.iloc[i]['CGPA_CHANGE']) + totalcl4   
                         cl4 =  1 + cl4
-                    print(cl1)    
             CGPA_Change = {'cl1':totalcl1/cl1,'cl2':totalcl2/cl2,'cl3':totalcl3/cl3,'cl4':totalcl4/cl4}
         else:
             messages.warning(request, 'File was not uploaded. Please use csv file extension!')
@@ -294,7 +280,7 @@ def cpredictCourse(request):
     if request.method == 'POST':
         uploaded_file = request.FILES['cpredictdocs']
         fs = FileSystemStorage()
-        ne = fs.save(uploaded_file.name, uploaded_file)
+        ne =fs.save(uploaded_file.name, uploaded_file)
         
         name['fname'] = uploaded_file.name
 
@@ -318,15 +304,12 @@ def cpredict(request):
             support = float(temp['support'])
             confidence = float(temp['confidence'])
 
-            # create frequent itemsets
             itemsets = apriori(df, min_support=support, use_colnames=True)
 
-            # convert into rules
             rules = association_rules(itemsets, metric='confidence', min_threshold=confidence)
 
             rules["antecedents"] = rules["antecedents"].apply(lambda x: list(x)[0]).astype("unicode")
             rules["consequents"] = rules["consequents"].apply(lambda x: list(x)[0]).astype("unicode")
-
 
             rules = rules[['antecedents','consequents','support','confidence','lift']]
             rules = rules.sort_values(['confidence'], ascending =[False])
@@ -336,7 +319,6 @@ def cpredict(request):
             result_perf.reset_index(drop=True,inplace=True)
             dFile = []
             
-           
             for i in range(0,len(result_perf)):
                 dictFile = {'antecedents':result_perf.iloc[i]['antecedents'],'consequents':result_perf.iloc[i]['consequents'],'support':result_perf.iloc[i]['support'],'confidence':result_perf.iloc[i]['confidence'],'lift':result_perf.iloc[i]['lift']}
                 dFile.append(dictFile)

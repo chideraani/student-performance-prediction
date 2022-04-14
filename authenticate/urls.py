@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
 from django.conf.urls import url
 from django.conf.urls.static import static
 from . import views
@@ -16,8 +16,6 @@ urlpatterns = [
     path('logout/', views.logoutUser,name='logout'),
     path('register/', views.register,name='register'),
     path('check/', views.check,name='check'),
-
-
     url('associateCourse', views.associateCourse, name='associateCourse'),
     url('checkCourse', views.checkCourse, name='checkCourse'), 
     url('chart', views.chart, name='chart'),

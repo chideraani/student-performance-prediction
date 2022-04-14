@@ -1,6 +1,5 @@
 {% load static %}
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,15 +12,11 @@
     <meta name="author" content="">
 
     <title>Datern</title>
-    <!-- <script src='https://cdn.plot.ly/plotly-2.2.0.min.js'></script> -->
-    <!-- Custom fonts for this template-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-    <!-- Custom styles for this template-->
     <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
     
-
 </head>
 
 
@@ -56,29 +51,29 @@
         color: white;
         border-radius: 4px;
         font-weight: bold;
-    }
+     }
     .btn1:hover{
         background-color: white;
         color: 	rgb(2, 117, 216);
         border: 1px solid;
         cursor: pointer;
-}
-.btn2{
-  border: none;
-  outline: none;
-  height: 45px;
-  width: 40%;
-  background-color: 	rgb(2, 117, 216);
-  color: white;
-  border-radius: 4px;
-  font-weight: bold;
-}
-.btn2:hover{
-  background-color: white;
-  color: 	rgb(2, 117, 216);
-  border: 1px solid;
-  cursor: pointer;
-}
+    }
+    .btn2{
+      border: none;
+      outline: none;
+      height: 45px;
+      width: 40%;
+      background-color: 	rgb(2, 117, 216);
+      color: white;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+    .btn2:hover{
+      background-color: white;
+      color: 	rgb(2, 117, 216);
+      border: 1px solid;
+      cursor: pointer;
+    }
     .upload-text{
         width: 60%;
     }
@@ -92,7 +87,10 @@
         margin-bottom: 5%;
         margin-left: 8%;
     }
+
 </style>
+
+
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -107,17 +105,12 @@
 
             <!-- Main Content -->
             <div id="content">
-
-             
                     {% block content%}
                     
                     {%endblock%}
             
             </div>
-            <!-- Footer -->
-            <!-- {% include 'authenticate/partials/_footer.html'%} -->
-            <!-- End of Footer -->
-
+            
         </div>
         <!-- End of Content Wrapper -->
 
@@ -159,13 +152,11 @@
     });
 
 
-// Set new default font family and font color to mimic Bootstrap's default styling
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#858796';
 
 function number_format(number, decimals, dec_point, thousands_sep) {
-  // *     example: number_format(1234.56, 2, ',', ' ');
-  // *     return: '1 234,56'
+
   number = (number + '').replace(',', '').replace(' ', '');
   var n = !isFinite(+number) ? 0 : +number,
     prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
@@ -176,7 +167,7 @@ function number_format(number, decimals, dec_point, thousands_sep) {
       var k = Math.pow(10, prec);
       return '' + Math.round(n * k) / k;
     };
-  // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+
   s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
   if (s[0].length > 3) {
     s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
@@ -190,7 +181,7 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 
 
 
-// Bar Chart Example
+// Bar Chart 
 var male =  document.getElementById("male").value;
 var female =  document.getElementById("female").value;
 var ctx = document.getElementById("myBarChart");
@@ -236,7 +227,6 @@ var myBarChart = new Chart(ctx, {
           max: 5.0,
           maxTicksLimit: 5.0,
           padding: 10,
-          // Include a dollar sign in the ticks
           callback: function(value, index, values) {
             return number_format(value);
           }
@@ -245,12 +235,6 @@ var myBarChart = new Chart(ctx, {
             display: true,
             zeroLineColor:"rgb(234, 236, 244)",
             color:'transparent'
-          //display: false,
-          //color: "rgb(234, 236, 244)",
-          //zeroLineColor: "rgb(234, 236, 244)",
-          //drawBorder: false,
-          //borderDash: [2],
-          //zeroLineBorderDash: [2]
         }
       }],
     },
@@ -316,13 +300,12 @@ var myPieChart = new Chart(ctx, {
   },
 });
 
+
 // Boxplot
 var  cgpa_male =  document.getElementById("cgpa_male").value ;
 cgpa_male=cgpa_male .split(',');
 cgpa_male=cgpa_male.map(e=>e.replace('[',''));
 cgpa_male=cgpa_male.map(e=>e.replace(']',''));
-
-
 
 var cgpa_female =  document.getElementById("cgpa_female").value;
 cgpa_female=cgpa_female .split(',');
@@ -346,7 +329,7 @@ console.log(cgpa_male)
 Plotly.newPlot('myBoxPlot', data);
 
 
-// Bar Chart Example 2
+// Bar Chart 
 var cl1 =  document.getElementById("cl1").value;
 var cl2 =  document.getElementById("cl2").value;
 var cl3 =  document.getElementById("cl3").value;
@@ -385,7 +368,6 @@ var myBarChart = new Chart(ctx, {
           drawBorder: false
         },
         ticks: {
-          //maxTicksLimit: 6
         },
         maxBarThickness: 80,
       }],
@@ -393,9 +375,7 @@ var myBarChart = new Chart(ctx, {
         ticks: {
           suggestedMax: -50,
           suggestedMin: 0,
-          //maxTicksLimit: 5.0,
           padding: 10,
-          // Include a dollar sign in the ticks
           callback: function(value, index, values) {
             return number_format(value) +  '%';
           }
